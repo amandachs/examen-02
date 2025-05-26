@@ -1,29 +1,34 @@
-import "./styles.css";
-import Encabezado from "./shared/Encabezado";
-import Vidas from "./shared/Vidas";
-import Parejas from "./shared/Parejas";
-import Reinicio from "./shared/Reinicio";
-import Card from "./shared/Card";
-import Motor from "./shared/Motor";
+import React from 'react'
+import styled, { createGlobalStyle } from 'styled-components'
+import Header from './shared/Header'
+import GameEngine from './shared/GameEngine'
 
-export default function App() {
+const GlobalStyle = createGlobalStyle`
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html, body, #root {
+    height: 100%;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+  }
+  body {
+    background: #212121;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+`
+
+function App() {
   return (
-    <body>
-      <Encabezado />
-      <main>
-        <section id="AppCards"></section>
-        <Card />
-        <section id="AppControlPanel">
-          <Vidas />
-          <Parejas />
-          <Reinicio />
-        </section>
-      </main>
-      <script
-        type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/toastify-js"
-      ></script>
-      <script src="js/index.js" type="module"></script>
-    </body>
-  );
+    <>
+      <GlobalStyle />
+      <Header />
+      <GameEngine />
+    </>
+  )
 }
+
+export default App
