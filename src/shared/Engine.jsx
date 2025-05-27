@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react"
-import styled from "styled-components"
-import Card from "./Card"
-import Lives from "./Lives"
-import PairsList from "./PairsList"
-import RestartButton from "./RestartButton"
-import Toastify from "toastify-js"
-import "toastify-js/src/toastify.css"
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import Toastify from "toastify-js"; //npm install toastify-js --legacy-peer-deps
+import "toastify-js/src/toastify.css";
+
+import Card from "./Card";
+import Lives from "./Lives";
+import PairsList from "./PairsList";
+import RestartButton from "./RestartButton";
 
 // Estilos del componente
 const MainContainer = styled.main`
@@ -16,7 +17,7 @@ const MainContainer = styled.main`
   width: 100%;
   height: calc(100vh - 150px);
   margin: 0;
-`
+`;
 const CardsContainer = styled.section`
   flex: 1;
   display: grid;
@@ -30,7 +31,7 @@ const CardsContainer = styled.section`
   align-content: center;
   background-color: #1e1e1e;
   padding: 0;
-`
+`;
 const ControlPanel = styled.section`
   flex: 1;
   color: #fff;
@@ -41,105 +42,105 @@ const ControlPanel = styled.section`
   align-items: center;
   justify-content: center;
   padding: 1em;
-`
+`;
 const SubTitle = styled.h2`
   font-weight: 200;
   margin: 20px 20px 0;
-`
+`;
 
-// Componente
-export default function GameEngine() {
-  const [words, setWords] = useState([])
-  const [cards, setCards] = useState([])
-  const [lives, setLives] = useState(5)
-  const [guessed, setGuessed] = useState([])
-  const [selected, setSelected] = useState([])
-  const [block, setBlock] = useState(false)
-  const [stopped, setStopped] = useState(false)
+// Motor del juego en general
+function Engine() {
+  const [words, setWords] = useState([]);
+  const [cards, setCards] = useState([]);
+  const [lives, setLives] = useState(5);
+  const [guessed, setGuessed] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [block, setBlock] = useState(false);
+  const [stopped, setStopped] = useState(false);
 
   useEffect(() => {
-    init()
-  }, [])
+    init();
+  }, []);
 
   async function getRandomWords() {
     const res = await fetch(
-      "https://random-word-api.herokuapp.com/word?number=6&lang=es"
-    )
-    return res.json()
+      "https://random-word-api.herokuapp.com/word?number=6&lang=es" //cambio de enlace
+    );
+    return res.json();
   }
 
   function shuffle(arr) {
     return arr
-      .map(a => ({ sort: Math.random(), value: a }))
+      .map((a) => ({ sort: Math.random(), value: a }))
       .sort((a, b) => a.sort - b.sort)
-      .map(a => a.value)
+      .map((a) => a.value);
   }
 
   async function init() {
-    const w = await getRandomWords()
-    setWords(w)
-    setLives(5)
-    setGuessed([])
-    setSelected([])
-    setStopped(false)
-    const duplicated = w.flatMap(x => [x, x])
-    setCards(shuffle(duplicated))
+    const w = await getRandomWords();
+    setWords(w);
+    setLives(5);
+    setGuessed([]);
+    setSelected([]);
+    setStopped(false);
+    const duplicated = w.flatMap((x) => [x, x]);
+    setCards(shuffle(duplicated));
   }
 
   function restart() {
-    init()
+    init();
   }
 
-  function reduceLive() {
-    const h = lives - 1
+  function reduceLives() {
+    const h = lives - 1;
     if (h === 0) {
-      setStopped(true)
+      setStopped(true);
       Toastify({
         text: "Has perdido el juego. Presiona reiniciar para volver a intentarlo.",
         duration: 3000,
         style: {
           background:
-            "linear-gradient(to right,rgb(176, 0, 0),rgb(201, 103, 61))"
-        }
-      }).showToast()
+            "linear-gradient(to right,rgb(176, 0, 0),rgb(201, 103, 61))",
+        },
+      }).showToast();
     }
-    setLives(h)
+    setLives(h);
   }
 
   function handleClick(idx) {
-    if (block || stopped) return
-    if (selected.includes(idx) || guessed.includes(cards[idx])) return
-    setBlock(true)
+    if (block || stopped) return;
+    if (selected.includes(idx) || guessed.includes(cards[idx])) return;
+    setBlock(true);
 
     if (selected.length === 1) {
-      const firstIdx = selected[0]
+      const firstIdx = selected[0];
       if (cards[firstIdx] === cards[idx] && firstIdx !== idx) {
-        const ng = [...guessed, cards[idx]]
-        setGuessed(ng)
+        const ng = [...guessed, cards[idx]];
+        setGuessed(ng);
         if (ng.length === words.length) {
-          setStopped(true)
+          setStopped(true);
           Toastify({
             text: "Has ganado el juego 😊. Presiona reiniciar para volver a jugar.",
             duration: 3000,
             style: {
               background:
-                "linear-gradient(to right,rgb(48, 104, 23),rgb(24, 38, 192))"
-            }
-          }).showToast()
+                "linear-gradient(to right,rgb(48, 104, 23),rgb(24, 38, 192))",
+            },
+          }).showToast();
         }
-        setSelected([])
-        setBlock(false)
+        setSelected([]);
+        setBlock(false);
       } else {
-        setSelected([firstIdx, idx])
+        setSelected([firstIdx, idx]);
         setTimeout(() => {
-          reduceLives()
-          setSelected([])
-          setBlock(false)
-        }, 1000)
+          reduceLives();
+          setSelected([]);
+          setBlock(false);
+        }, 1000);
       }
     } else {
-      setSelected([idx])
-      setBlock(false)
+      setSelected([idx]);
+      setBlock(false);
     }
   }
 
@@ -163,5 +164,7 @@ export default function GameEngine() {
         <RestartButton onClick={restart} />
       </ControlPanel>
     </MainContainer>
-  )
+  );
 }
+
+export default Engine;

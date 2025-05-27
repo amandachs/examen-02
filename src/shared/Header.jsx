@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 
 // Estilos del componente
@@ -10,11 +11,14 @@ const HeaderContainer = styled.header`
   align-items: center;
   width: 100%; /* Asegura que ocupe todo el ancho */
 `
-// Componente
-export default function Header() {
+
+// Encabezado de la página
+function Header() {
   return (
     <HeaderContainer>
       <h1>Encuentra la pareja</h1>
     </HeaderContainer>
   )
 }
+
+export default Header

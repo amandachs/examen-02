@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 // Estilos del componente
@@ -8,8 +9,8 @@ const ListItem = styled.li`
   list-style: none;
 `;
 
-// Componente
-export default function PairsList({ items }) {
+// Lista de parejas hechas durante el juego
+function PairsList({ items }) {
   return (
     <Pairs>
       {items.map((item, i) => (
@@ -18,3 +19,5 @@ export default function PairsList({ items }) {
     </Pairs>
   );
 }
+
+export default PairsList;

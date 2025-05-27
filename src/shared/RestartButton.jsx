@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 // Estilos del componente
@@ -30,7 +31,9 @@ const Button = styled.button`
   }
 `;
 
-// Componente
-export default function RestartButton({ onClick }) {
+// Botón para reiniciar el juego
+function RestartButton({ onClick }) {
   return <Button onClick={onClick}>Reiniciar</Button>;
 }
+
+export default RestartButton;

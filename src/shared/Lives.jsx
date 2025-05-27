@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 // Estilos del componente
@@ -6,8 +7,8 @@ const LivesContainer = styled.div`
   justify-content: center;
 `;
 
-// Componente
-export default function Lives({ count }) {
+// Vidas por partida
+function Lives({ count }) {
   return (
     <LivesContainer>
       {Array(count)
@@ -18,3 +19,5 @@ export default function Lives({ count }) {
     </LivesContainer>
   );
 }
+
+export default Lives;

@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import React from "react";
+import styled, { css } from "styled-components";
 
 // Estilos del componente
 const CardContainer = styled.div`
@@ -40,8 +41,8 @@ const Value = styled.div`
   transform: rotateY(180deg);
 `;
 
-// Componente
-export default function Card({ word, flipped, onClick }) {
+// Cartas del juego
+function Card({ word, flipped, onClick }) {
   return (
     <CardContainer flipped={flipped} onClick={onClick}>
       <Cover />
@@ -49,3 +50,5 @@ export default function Card({ word, flipped, onClick }) {
     </CardContainer>
   );
 }
+
+export default Card;

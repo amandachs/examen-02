@@ -1,9 +1,11 @@
-import React from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
-import Header from './shared/Header'
-import GameEngine from './shared/GameEngine'
+import React from "react";
+import { createGlobalStyle } from "styled-components"; //Aplica un estilo global
 
-const GlobalStyle = createGlobalStyle`
+import Header from "./shared/Header";
+import Engine from "./shared/Engine";
+
+// Estilos de la página global
+const Style = createGlobalStyle`
   *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -19,16 +21,17 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     font-family: Arial, Helvetica, sans-serif;
   }
-`
+`;
 
+// Componente global de la página (une el encabezado y estilos con el motor)
 function App() {
   return (
     <>
-      <GlobalStyle />
+      <Style />
       <Header />
-      <GameEngine />
+      <Engine />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
